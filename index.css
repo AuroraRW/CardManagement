@@ -1,0 +1,51 @@
+.layout{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1{
+    font-style:italic;
+    color:#925f81;
+}
+form{
+    background: linear-gradient(#e66465, #9198e5);
+    padding: 20px 30px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+form label{
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group{
+    margin-bottom: 25px;
+}
+input{
+    outline-color: white;
+    height: 25px;
+    font-size: 16px;
+}
+.button-layout{
+    display: flex;
+    justify-content: space-between;
+}
+button{
+    background-color:#e66465;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    padding:8px;
+}
+button:hover{
+   color:white;
+   cursor: pointer; 
+   transform: scale(1.1);
+}
+a{
+    color:black;
+    text-decoration: none;
+}
+a:hover{
+    color:white;
+}
