@@ -1,29 +1,32 @@
-const loginEle = document.querySelector('button')
-loginEle.addEventListener('click',(e)=>{
-    e.preventDefault()
-    document.getElementById('login-email').nextElementSibling.style.display = 'none'
-    document.getElementById('login-email').classList.remove("warning");
-    document.getElementById('login-password').nextElementSibling.style.display = 'none'
-    document.getElementById('login-password').classList.remove("warning");
+$(document).ready(()=>{
+    $('button').on('click',(e)=>{
+        e.preventDefault()
 
-    const email = document.getElementById('login-email').value
-    const password = document.getElementById('login-password').value
-    
+        $('#login-email').removeClass('warning')
+        $('#login-email').siblings('p').css('display', 'none')
+        $('#login-password').removeClass('warning')
+        $('#login-password').siblings('p').css('display', 'none')
 
-    let reEmail = /[a-z]+@[a-z]+\.[a-z]+/
-    let rePassword = /[a-zA-Z0-9]{6,20}/
-    if(!reEmail.test(email)){
-        document.getElementById('login-email').classList.add("warning");
-        document.getElementById('login-email').nextElementSibling.style.display = 'block'
-        console.log('email should be in correct format!')
-    }else if(!rePassword.test(password)){
-        document.getElementById('login-password').classList.add("warning");
-        document.getElementById('login-password').nextElementSibling.style.display = 'block'
-        console.log('password should be in correct format!')
-    }else{
-        // database
+        const email = $('#login-email').val()
+        const password = $('#login-password').val()
         console.log(email)
         console.log(password)
-        window.location.href='cards.html'
-    }
+
+        let reEmail = /[a-z]+@[a-z]+\.[a-z]+/
+        let rePassword = /[a-zA-Z0-9]{6,20}/
+        if(!reEmail.test(email)){
+            $('#login-email').addClass('warning')
+            $('#login-email').siblings('p').css('display', 'block')
+            console.log('email should be in correct format!')
+        }else if(!rePassword.test(password)){
+            $('#login-password').addClass('warning')
+            $('#login-password').siblings('p').css('display', 'block')
+            console.log('password should be in correct format!')
+        }else{
+            // database
+            console.log(email)
+            console.log(password)
+            window.location.href='cards.html'
+        }
+    })
 })

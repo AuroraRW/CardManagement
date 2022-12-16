@@ -1,49 +1,54 @@
-const submitEle = document.querySelector('button')
-submitEle.addEventListener('click',(e)=>{
-    e.preventDefault()
-    // remove warning
-    const warningEle = document.querySelectorAll('p')
-    if(warningEle.length!==0){
-        warningEle.forEach((element)=>{
-            element.remove()
-        })
-    }
-    const email = document.querySelectorAll('.form-control')[0].value
-    const password = document.querySelectorAll('.form-control')[1].value
-    const firstName = document.querySelectorAll('.form-control')[2].value
-    const lastName = document.querySelectorAll('.form-control')[3].value
+$(document).ready(()=>{
+    $('button').on('click',(e)=>{
+        e.preventDefault()
+
+        // remove warning
+        if($('p').length){
+            $('p').each(function(){
+                $(this).remove()
+            })
+        }
+        
+        const email = $($('.form-control')[0]).val()
+        const password = $($('.form-control')[1]).val()
+        const firstName = $($('.form-control')[2]).val()
+        const lastName = $($('.form-control')[3]).val()
     // add validation here
     //////////add your code here///////////
 
     //////////////////////////////////////
-    const genderEle = document.querySelector('input[name="gender"]:checked')
-    const perferEle = document.querySelectorAll('input[type="checkbox"]:checked')
+        const $genderEle = $('input[name="gender"]:checked')
+        const $perferEle = $('input[type="checkbox"]:checked')
 
+        if($genderEle.length==0){
+            const $warningEle = $('<p></p>')
+            $warningEle.text('Please select gender')
+            $warningEle.attr('class', 'warning')
+            $('.gender-section').append($warningEle)
+        }else if($perferEle.length==0){
+            const $warningEle = $('<p></p>')
+            $warningEle.text('Please select')
+            $warningEle.attr('class', 'warning')
+            $('.preference').append($warningEle)
+        }else{
+            const gender = $genderEle.val()
+            let perfer=[]
+            // $perferEle.each(i=>{
+            //     // console.log($($perferEle[i]).val())
+            //     perfer.push($($perferEle[i]).val())
+            // })
 
-    // validation
-    if(!genderEle){
-        // create an element to show the warning
-        const warningEle = document.createElement('p')
-        warningEle.setAttribute('class', 'warning')
-        warningEle.innerText = 'Please select gender'
-        document.querySelector('.gender-section').appendChild(warningEle)
-    }else if(!perferEle.length){
-        // when true, that means user click nothing
-        const warningEle = document.createElement('p')
-        warningEle.setAttribute('class', 'warning')
-        warningEle.innerText = 'Please select'
-        document.querySelector('.preference').appendChild(warningEle)
-    }else{
-        const gender = genderEle.value
-        let perfer=[]
-        perferEle.forEach(ele=>{
-            perfer.push(ele.value)
-        })
-        console.log(email)
-        console.log(password)
-        console.log(firstName)
-        console.log(lastName)
-        console.log(gender)
-        console.log(perfer)
-    }
+            $perferEle.each(function(){
+                // console.log($(this).val())
+                perfer.push($(this).val())
+            })
+
+            console.log(email)
+            console.log(password)
+            console.log(firstName)
+            console.log(lastName)
+            console.log(gender)
+            console.log(perfer)
+        }
+    })
 })
