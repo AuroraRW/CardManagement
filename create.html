@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>New Card</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-4"></div>
+            <div class="col-sm-12 col-md-4">
+                <h1 class="text-center fst-italic">New Card</h1>
+                <form action="">
+                    <div>
+                        <label class="form-label" for="">Name:</label>
+                        <input class="form-control" type="text">
+                    </div>
+                    <div>
+                        <label class="form-label" for="">Description:</label>
+                        <textarea class="form-control" name="" id="" cols="30" rows="5"></textarea>
+                    </div>
+                    <div class="form-block">
+                        <div>
+                            <label class="form-label" for="">Level:</label>
+                            <input class="form-control" type="number" min="0">
+                        </div>
+                        <div>
+                            <label class="form-label" for="">Points:</label>
+                            <input class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="">Image URL:</label>
+                        <input class="form-control" type="text">
+                    </div>
+                </form>
+                <div class="d-flex justify-content-end m-3">
+                    <button class="btn btn-warning">Submit</button>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4"></div>
+        </div>
+    </div>
+    <script src="create.js"></script>
+</body>
+</html>
