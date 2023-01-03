@@ -1,3 +1,4 @@
+import {auth, createUserWithEmailAndPassword, db, ref, set} from './firebase.js'
 $(document).ready(()=>{
     $('button').on('click',(e)=>{
         e.preventDefault()
@@ -43,12 +44,34 @@ $(document).ready(()=>{
                 perfer.push($(this).val())
             })
 
-            console.log(email)
-            console.log(password)
-            console.log(firstName)
-            console.log(lastName)
-            console.log(gender)
-            console.log(perfer)
+            // console.log(email)
+            // console.log(password)
+            // console.log(firstName)
+            // console.log(lastName)
+            // console.log(gender)
+            // console.log(perfer)
+            const userData = {Email: email, Password: password, 
+                FirstName: firstName, LastName: lastName, 
+                Gender: gender, Perfer:perfer}
+            
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                const userKey = user.uid
+                // save into db
+                set(ref(db, 'Users/' + userKey), userData)
+                .then(()=>{
+                    localStorage.setItem('name', firstName)
+                    window.location.href = "cards.html"
+                })
+                
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage)
+            });
         }
     })
 })
