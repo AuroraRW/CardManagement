@@ -1,4 +1,5 @@
-import {auth, signInWithEmailAndPassword, db, ref, child, get} from './firebase.js'
+import {apiKey, databaseUrl} from './firebase.js'
+const signinUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='
 $(document).ready(()=>{
     $('button').on('click',(e)=>{
         e.preventDefault()
@@ -27,32 +28,60 @@ $(document).ready(()=>{
             // database
             // console.log(email)
             // console.log(password)
-            signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                // console.log(user)
-                const userKey = user.uid
-                const dbRef = ref(db);
-                get(child(dbRef, `Users/${userKey}`)).then((snapshot) => {
-                    if (snapshot.exists()) {
-                        // console.log(snapshot.val());
-                        let name = snapshot.val().FirstName
-                        localStorage.setItem('name', name)
-                        window.location.href='cards.html'
 
-                    } else {
-                      console.log("No data available");
-                    }
-                  }).catch((error) => {
-                    console.error(error);
-                  });
+            const url = signinUrl + apiKey
+            fetch(url,{
+                method:'POST',
+                body: JSON.stringify({email:email,password:password,returnSecureToken:true})
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage)
-            });
+            .then(res=>{
+                return res.json()
+            })
+            .then(response=>{
+                const userKey = response.localId
+                // save user infor into database
+                const token = response.idToken
+                const url = databaseUrl+'/Users/'+userKey+'/.json?auth='+ token
+
+                // get the user infor from database
+                fetch(url)
+                .then(response=>{
+                    return response.json()
+                })
+                .then(response=>{
+                    console.log(response)
+                    // console.log(response.FirstName)
+                    localStorage.setItem('token', token)
+                    localStorage.setItem('name', response.FirstName)
+                    window.location.href="cards.html"
+                })
+            })
+            // signInWithEmailAndPassword(auth, email, password)
+            // .then((userCredential) => {
+            //     // Signed in 
+            //     const user = userCredential.user;
+            //     // console.log(user)
+            //     const userKey = user.uid
+            //     const dbRef = ref(db);
+            //     get(child(dbRef, `Users/${userKey}`)).then((snapshot) => {
+            //         if (snapshot.exists()) {
+            //             // console.log(snapshot.val());
+            //             let name = snapshot.val().FirstName
+            //             localStorage.setItem('name', name)
+            //             window.location.href='cards.html'
+
+            //         } else {
+            //           console.log("No data available");
+            //         }
+            //       }).catch((error) => {
+            //         console.error(error);
+            //       });
+            // })
+            // .catch((error) => {
+            //     const errorCode = error.code;
+            //     const errorMessage = error.message;
+            //     console.log(errorMessage)
+            // });
             
         }
     })

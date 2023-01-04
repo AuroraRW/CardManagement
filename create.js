@@ -1,4 +1,4 @@
-import {db, ref,set} from './firebase.js'
+import {databaseUrl} from './firebase.js'
 $(document).ready(()=>{
     $('button').on('click',(e)=>{
         e.preventDefault()
@@ -14,9 +14,18 @@ $(document).ready(()=>{
         console.log(data)
         // save data into db
         const cardKey = getRandomKey()
-        set(ref(db, 'Cards/' + cardKey), data)
-        .then(()=>{
-            window.location.href = "cards.html"
+        const token = localStorage.getItem('token')
+        const url = databaseUrl +'/Cards/' + cardKey + '/.json?auth=' + token
+        console.log(url)
+        fetch(url,{
+          method: 'PUT',
+          body: JSON.stringify(data)
+        })
+        .then(response=>{
+            return response.json()
+        })
+        .then(response=>{
+            window.location.href="cards.html"
         })
     })
 })

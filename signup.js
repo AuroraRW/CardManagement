@@ -1,4 +1,5 @@
-import {auth, createUserWithEmailAndPassword, db, ref, set} from './firebase.js'
+import {apiKey, databaseUrl} from './firebase.js'
+const singupUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='
 $(document).ready(()=>{
     $('button').on('click',(e)=>{
         e.preventDefault()
@@ -53,25 +54,32 @@ $(document).ready(()=>{
             const userData = {Email: email, Password: password, 
                 FirstName: firstName, LastName: lastName, 
                 Gender: gender, Perfer:perfer}
-            
-            createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                const userKey = user.uid
-                // save into db
-                set(ref(db, 'Users/' + userKey), userData)
-                .then(()=>{
-                    localStorage.setItem('name', firstName)
-                    window.location.href = "cards.html"
-                })
-                
+            const url = singupUrl + apiKey
+            fetch(url,{
+                method:'POST',
+                body: JSON.stringify({email:email,password:password,returnSecureToken:true})
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage)
-            });
+            .then(res=>{
+                return res.json()
+            })
+            .then(response=>{
+                console.log(response)
+                const userKey = response.localId
+                const token = response.idToken
+                const dataUrl = databaseUrl+'/Users/'+userKey+'/.json?auth='+ token
+                fetch(dataUrl,{
+                    method: 'PUT',
+                    body: JSON.stringify(userData)
+                })
+                .then(response=>{
+                    return response.json()
+                })
+                .then(response=>{
+                    localStorage.setItem('token', token)
+                    localStorage.setItem('name', response.FirstName)
+                    window.location.href="cards.html"
+                })
+            })
         }
     })
 })
