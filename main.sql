@@ -2,7 +2,7 @@
 ----1. Install sqlite on your computer or create a repl in replit website
 ----2. run "sqlite3 cardsDB.db" in shell
 ----3. run ".read main.sql"
----- control D to exit
+---- ctrl D to exit
 -------------------------------------------------------
 
 -- DROP TABLE IF EXISTS cards;

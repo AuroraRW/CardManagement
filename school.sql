@@ -2,7 +2,7 @@
 ----1. Install sqlite on your computer or create a repl in replit website
 ----2. run "sqlite3 schoolDB.db" in shell
 ----3. run ".read school.sql"
----- control D to exit
+---- ctrl D to exit
 -------------------------------------------------------
 
 -- DROP TABLE IF EXISTS teachers;
