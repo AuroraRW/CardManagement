@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js'
-import {getDatabase, ref, set, child, get } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js'
+import {getDatabase, ref, set, child, get, remove } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -18,5 +18,5 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth()
 const db = getDatabase(app);
 export {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
-        db, ref, set, child, get }
+        db, ref, set, child, get, remove }
 
