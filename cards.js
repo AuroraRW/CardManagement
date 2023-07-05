@@ -92,6 +92,10 @@ $(document).ready(()=>{
                 console.error(error);
             });
 
+    }else{
+        $('.container').empty()
+        let $infor = $(`<h1>Please login </h1>`)
+        $('.container').append($infor)
     }
 
     $($('button')[0]).on('click', ()=>{
